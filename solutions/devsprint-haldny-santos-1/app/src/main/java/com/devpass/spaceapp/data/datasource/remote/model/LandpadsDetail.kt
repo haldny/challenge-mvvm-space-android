@@ -1,4 +1,4 @@
-package com.devpass.spaceapp.data.model
+package com.devpass.spaceapp.data.datasource.remote.model
 
 import com.squareup.moshi.Json
 
@@ -22,6 +22,5 @@ data class LandpadsDetail(
     @Json(name = "details")
     val details: String,
     @Json(name = "id")
-    val id: String,
-
+    val id: String
 )

@@ -1,6 +1,6 @@
-package com.devpass.spaceapp.data.retrofit
+package com.devpass.spaceapp.data.datasource.remote.retrofit
 
-import com.devpass.spaceapp.data.api.SpaceXAPIService
+import com.devpass.spaceapp.data.datasource.remote.api.SpaceXAPIService
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
