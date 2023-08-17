@@ -26,3 +26,4 @@ data class LaunchesPage(
     @Json(name = "nextPage")
     val nextPage: Int?
 )
+
