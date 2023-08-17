@@ -1,10 +1,10 @@
-package com.devpass.spaceapp.data.api
+package com.devpass.spaceapp.data.datasource.remote.api
 
-import com.devpass.spaceapp.data.model.QueryParams
-import com.devpass.spaceapp.data.model.RocketsDetail as RocketsDetailResponse
-import com.devpass.spaceapp.data.model.LandpadsDetail as LandpadsDetailResponse
+import com.devpass.spaceapp.data.datasource.remote.model.QueryParams
+import com.devpass.spaceapp.data.datasource.remote.model.RocketsDetail as RocketsDetailResponse
+import com.devpass.spaceapp.data.datasource.remote.model.LandpadsDetail as LandpadsDetailResponse
 import retrofit2.http.Body
-import com.devpass.spaceapp.data.model.LaunchesPage as LaunchesPageResponse
+import com.devpass.spaceapp.data.datasource.remote.model.LaunchesPage as LaunchesPageResponse
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path

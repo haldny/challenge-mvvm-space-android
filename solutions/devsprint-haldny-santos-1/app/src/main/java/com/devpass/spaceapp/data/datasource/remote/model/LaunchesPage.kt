@@ -1,10 +1,10 @@
-package com.devpass.spaceapp.data.model
+package com.devpass.spaceapp.data.datasource.remote.model
 
 import com.squareup.moshi.Json
 
 data class LaunchesPage(
     @Json(name = "docs")
-    val docs: List<String>,
+    val docs: List<Launches>,
     @Json(name = "totalDocs")
     val totalDocs: Int,
     @Json(name = "offset")
@@ -26,3 +26,4 @@ data class LaunchesPage(
     @Json(name = "nextPage")
     val nextPage: Int?
 )
+

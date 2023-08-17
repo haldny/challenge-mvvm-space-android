@@ -1,4 +1,4 @@
-package com.devpass.spaceapp.data.model
+package com.devpass.spaceapp.data.datasource.remote.model
 
 import com.squareup.moshi.Json
 
