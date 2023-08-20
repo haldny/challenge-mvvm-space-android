@@ -1,4 +1,4 @@
-package com.devpass.spaceapp.presentation.launchList
+package com.devpass.spaceapp.presentation.launchList.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devpass.spaceapp.databinding.ListItemBinding
 
 class LaunchListAdapter : ListAdapter<LaunchModel, LaunchViewHolder>(LaunchModel) {
+
+    override fun submitList(list: List<LaunchModel>?) {
+        super.submitList(list)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchViewHolder {
         return LaunchViewHolder.from(parent)
@@ -17,19 +21,14 @@ class LaunchListAdapter : ListAdapter<LaunchModel, LaunchViewHolder>(LaunchModel
     }
 }
 
-class LaunchViewHolder(binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-    private val imageLaunch = binding.ivLogo
-    private val numberLaunch = binding.tvNumber
-    private val nameLaunch = binding.tvName
-    private val dateLaunch = binding.tvDate
-    private val statusLaunch = binding.tvStatus
+class LaunchViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(model: LaunchModel) {
-        imageLaunch.setImageResource(model.image)
-        numberLaunch.text = model.number
-        nameLaunch.text = model.name
-        dateLaunch.text = model.date
-        statusLaunch.text = model.status
+    fun bind(model: LaunchModel) = binding.apply {
+        binding.ivLogo.setImageResource(model.image)
+        binding.tvNumber.text = model.number
+        binding.tvName.text = model.name
+        binding.tvDate.text = model.date
+        binding.tvStatus.text = model.status
     }
 
     companion object {
