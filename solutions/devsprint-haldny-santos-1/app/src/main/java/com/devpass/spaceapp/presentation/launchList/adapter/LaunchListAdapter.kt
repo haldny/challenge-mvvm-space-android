@@ -9,10 +9,6 @@ import com.squareup.picasso.Picasso
 
 class LaunchListAdapter : ListAdapter<LaunchModel, LaunchViewHolder>(LaunchModel) {
 
-    override fun submitList(list: List<LaunchModel>?) {
-        super.submitList(list)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchViewHolder {
         return LaunchViewHolder.from(parent)
     }
