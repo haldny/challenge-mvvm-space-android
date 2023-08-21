@@ -5,19 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.devpass.spaceapp.data.datasource.remote.model.LaunchesPage
+import com.devpass.spaceapp.data.datasource.remote.toLaunchPresentation
 import com.devpass.spaceapp.data.repository.FetchLaunchesRepository
+import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
 import kotlinx.coroutines.launch
 
 class LaunchListViewModel(private val repository: FetchLaunchesRepository) : ViewModel() {
 
-    private val _list = MutableLiveData<LaunchesPage>()
-    var list: LiveData<LaunchesPage> = _list
+    private val _list = MutableLiveData<List<LaunchModel>>()
+    var list: LiveData<List<LaunchModel>> = _list
 
     fun getLaunches() {
         viewModelScope.launch {
-            _list.value = repository.getsLaunches()
-
+            _list.value = repository.getsLaunches().docs.map {
+                it.toLaunchPresentation(it)
+            }
         }
     }
 

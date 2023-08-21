@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.devpass.spaceapp.databinding.ListItemBinding
+import com.squareup.picasso.Picasso
 
 class LaunchListAdapter : ListAdapter<LaunchModel, LaunchViewHolder>(LaunchModel) {
 
@@ -24,7 +25,10 @@ class LaunchListAdapter : ListAdapter<LaunchModel, LaunchViewHolder>(LaunchModel
 class LaunchViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(model: LaunchModel) = binding.apply {
-        binding.ivLogo.setImageResource(model.image)
+        Picasso.get()
+            .load(model.image)
+            .into(binding.ivLogo)
+
         binding.tvNumber.text = model.number
         binding.tvName.text = model.name
         binding.tvDate.text = model.date

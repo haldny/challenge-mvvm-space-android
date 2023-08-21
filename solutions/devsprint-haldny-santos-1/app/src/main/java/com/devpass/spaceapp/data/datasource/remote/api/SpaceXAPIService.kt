@@ -14,6 +14,6 @@ interface SpaceXAPIService {
     suspend fun getLandpadsDetail(@Path("id") id: String): LandpadsDetailResponse
     @GET("/rockets/{id}")
     suspend fun getRocketsDetail(@Path("id") id: String): RocketsDetailResponse
-    @POST("/launches/query")
+    @POST("v5/launches/query")
     suspend fun getsLaunches(@Body params: QueryParams): LaunchesPageResponse
 }
