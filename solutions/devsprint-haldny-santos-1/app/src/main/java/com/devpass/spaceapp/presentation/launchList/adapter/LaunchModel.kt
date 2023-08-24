@@ -6,7 +6,7 @@ data class LaunchModel(
     val name: String,
     val number: String,
     var date: String,
-    val status: String,
+    val status: Boolean,
     val image: String
 ) {
     companion object : DiffUtil.ItemCallback<LaunchModel>() {

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.devpass.spaceapp.R
 import com.devpass.spaceapp.databinding.ListItemBinding
 import com.squareup.picasso.Picasso
 
@@ -18,7 +19,8 @@ class LaunchListAdapter : ListAdapter<LaunchModel, LaunchViewHolder>(LaunchModel
     }
 }
 
-class LaunchViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+class LaunchViewHolder(private val binding: ListItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(model: LaunchModel) = binding.apply {
         Picasso.get()
@@ -28,7 +30,9 @@ class LaunchViewHolder(private val binding: ListItemBinding) : RecyclerView.View
         binding.tvNumber.text = model.number
         binding.tvName.text = model.name
         binding.tvDate.text = model.date
-        binding.tvStatus.text = model.status
+        binding.tvStatus.text =
+            if (model.status) root.context.getString(R.string.text_status_success)
+            else root.context.getString(R.string.text_status_failure)
     }
 
     companion object {
