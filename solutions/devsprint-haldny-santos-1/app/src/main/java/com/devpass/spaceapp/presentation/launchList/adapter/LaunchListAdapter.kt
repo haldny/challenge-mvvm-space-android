@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.devpass.spaceapp.R
 import com.devpass.spaceapp.databinding.ListItemBinding
-import com.squareup.picasso.Picasso
 
 class LaunchListAdapter : ListAdapter<LaunchModel, LaunchViewHolder>(LaunchModel) {
 
@@ -23,7 +23,7 @@ class LaunchViewHolder(private val binding: ListItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(model: LaunchModel) = binding.apply {
-        Picasso.get()
+        Glide.with(binding.root)
             .load(model.image)
             .into(binding.ivLogo)
 
