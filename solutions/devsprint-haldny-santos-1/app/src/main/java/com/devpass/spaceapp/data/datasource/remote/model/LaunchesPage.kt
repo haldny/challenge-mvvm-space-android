@@ -4,11 +4,9 @@ import com.squareup.moshi.Json
 
 data class LaunchesPage(
     @Json(name = "docs")
-    val docs: List<Launches>,
+    val docs: List<Launch>,
     @Json(name = "totalDocs")
     val totalDocs: Int,
-    @Json(name = "offset")
-    val offset: Int,
     @Json(name = "limit")
     val limit: Int,
     @Json(name = "totalPages")

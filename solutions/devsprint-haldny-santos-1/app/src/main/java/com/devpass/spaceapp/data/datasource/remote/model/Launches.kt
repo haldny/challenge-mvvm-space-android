@@ -2,7 +2,7 @@ package com.devpass.spaceapp.data.datasource.remote.model
 
 import com.squareup.moshi.Json
 
-data class Launches(
+data class Launch(
     @Json(name = "links")
     val links: Link,
     @Json(name = "rocket")
