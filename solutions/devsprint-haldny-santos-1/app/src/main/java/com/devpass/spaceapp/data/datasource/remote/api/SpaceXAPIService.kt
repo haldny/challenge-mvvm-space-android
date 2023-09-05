@@ -1,7 +1,6 @@
 package com.devpass.spaceapp.data.datasource.remote.api
 
 import com.devpass.spaceapp.data.datasource.remote.model.QueryParams
-import kotlinx.coroutines.flow.Flow
 import com.devpass.spaceapp.data.datasource.remote.model.RocketsDetail as RocketsDetailResponse
 import com.devpass.spaceapp.data.datasource.remote.model.LandpadsDetail as LandpadsDetailResponse
 import retrofit2.http.Body
@@ -16,5 +15,5 @@ interface SpaceXAPIService {
     @GET("/rockets/{id}")
     suspend fun getRocketsDetail(@Path("id") id: String): RocketsDetailResponse
     @POST("v5/launches/query")
-    suspend fun getsLaunches(@Body params: QueryParams): Flow<LaunchesPageResponse>
+    suspend fun getsLaunches(@Body params: QueryParams): LaunchesPageResponse
 }
