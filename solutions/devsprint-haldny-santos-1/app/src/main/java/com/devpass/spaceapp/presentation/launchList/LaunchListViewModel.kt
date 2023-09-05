@@ -10,7 +10,6 @@ import com.devpass.spaceapp.data.datasource.remote.toLaunchPresentation
 import com.devpass.spaceapp.data.repository.FetchLaunchesRepository
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class LaunchListViewModel(private val repository: FetchLaunchesRepository) : ViewModel() {
 
@@ -20,16 +19,19 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
     fun getLaunches() {
         viewModelScope.launch {
             _launchList.value = LaunchListUiState.Loading(true)
-            when (val result = repository.getsLaunches()) {
-                is ResultData.Success -> {
-                    _launchList.value = LaunchListUiState.Success(
-                        result.data.docs.map {
-                            it.toLaunchPresentation(it)
-                        }
-                    )
+            repository.getsLaunches().collect { resultData ->
+                when (resultData) {
+                    is ResultData.Success -> {
+                        _launchList.value = LaunchListUiState.Success(
+                            resultData.data.docs.map {
+                                it.toLaunchPresentation(it)
+                            }
+                        )
 
+                    }
+
+                    is ResultData.Error -> LaunchListUiState.Error(resultData.throwable)
                 }
-                is ResultData.Error -> LaunchListUiState.Error(result.exception)
             }
             _launchList.value = LaunchListUiState.Loading(false)
         }
@@ -48,5 +50,5 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
 sealed interface LaunchListUiState {
     data class Loading(val value: Boolean) : LaunchListUiState
     data class Success(val data: List<LaunchModel>) : LaunchListUiState
-    data class Error(val exception: Exception) : LaunchListUiState
+    data class Error(val throwable: Throwable) : LaunchListUiState
 }

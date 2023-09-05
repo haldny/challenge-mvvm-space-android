@@ -5,6 +5,7 @@ import com.devpass.spaceapp.data.datasource.remote.model.LandpadsDetail
 import com.devpass.spaceapp.data.datasource.remote.model.LaunchesPage
 import com.devpass.spaceapp.data.datasource.remote.model.QueryParams
 import com.devpass.spaceapp.data.datasource.remote.model.RocketsDetail
+import kotlinx.coroutines.flow.Flow
 
 class RemoteDataSourceImpl(private val apiService: SpaceXAPIService) : RemoteDataSource {
     override suspend fun getLandpadsDetail(id: String): LandpadsDetail {
@@ -15,7 +16,7 @@ class RemoteDataSourceImpl(private val apiService: SpaceXAPIService) : RemoteDat
         return apiService.getRocketsDetail(id)
     }
 
-    override suspend fun getsLaunches(params: QueryParams): LaunchesPage {
+    override suspend fun getsLaunches(params: QueryParams): Flow<LaunchesPage> {
         return apiService.getsLaunches(params)
     }
 }
