@@ -31,5 +31,6 @@
 
     <string name="text_status_success">Sucesso</string>
     <string name="text_status_failure">Falha</string>
+    <string name="text_toolbar_launch_list" translatable="false">Space App</string>
 
 </resources>

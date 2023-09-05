@@ -3,7 +3,9 @@ package com.devpass.spaceapp.presentation.launchList
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devpass.spaceapp.R
 import com.devpass.spaceapp.data.datasource.remote.retrofit.RetrofitClient
 import com.devpass.spaceapp.data.datasource.remote.source.RemoteDataSourceImpl
 import com.devpass.spaceapp.data.repository.FetchLaunchesRepository
@@ -27,19 +29,44 @@ class LaunchListActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         init()
+        setupToolbar()
         setupRecycleView()
-        initLaunchList()
+        setupObserve()
     }
 
     private fun init() {
-       val remoteDataSource = RemoteDataSourceImpl(RetrofitClient.getSpaceXAPI())
+        val remoteDataSource = RemoteDataSourceImpl(RetrofitClient.getSpaceXAPI())
         repository = FetchLaunchesRepositoryImpl(remoteDataSource)
         viewModel.getLaunches()
     }
 
-    private fun initLaunchList() {
-        viewModel.list.observe(this) {
-            adapter.submitList(it)
+    private fun setupObserve() {
+        viewModel.launchList.observe(this) {
+            when (it) {
+                is LaunchListUiState.Error -> {
+                    TODO()
+                }
+
+                is LaunchListUiState.Success -> {
+                    adapter.submitList(it.data)
+                }
+
+                is LaunchListUiState.Loading -> {
+                    setupProgress(it.value)
+                }
+            }
+        }
+    }
+
+    private fun setupProgress(value: Boolean) {
+        binding.pbLaunches.isActivated = value
+        binding.pbLaunches.isVisible = value
+    }
+
+    private fun setupToolbar() {
+        with(binding.includeToolbar) {
+            tvToolbarTitle.setText(R.string.text_toolbar_launch_list)
+            back.isVisible = false
         }
     }
 
