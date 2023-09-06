@@ -9,29 +9,37 @@ import com.devpass.spaceapp.data.ResultData
 import com.devpass.spaceapp.data.datasource.remote.toLaunchPresentation
 import com.devpass.spaceapp.data.repository.FetchLaunchesRepository
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class LaunchListViewModel(private val repository: FetchLaunchesRepository) : ViewModel() {
 
-    private val _launchList = MutableLiveData<LaunchListUiState>()
-    var launchList: LiveData<LaunchListUiState> = _launchList
+    private val _uiState: MutableStateFlow<LaunchListUiState> = MutableStateFlow(
+        LaunchListUiState.Success(
+            emptyList()
+        )
+    )
+    val uiState: StateFlow<LaunchListUiState> = _uiState
 
     fun getLaunches() {
         viewModelScope.launch {
-            _launchList.value = LaunchListUiState.Loading(true)
-            when (val result = repository.getsLaunches()) {
-                is ResultData.Success -> {
-                    _launchList.value = LaunchListUiState.Success(
-                        result.data.docs.map {
-                            it.toLaunchPresentation(it)
-                        }
-                    )
+            _uiState.value = LaunchListUiState.Loading(true)
+            repository.getsLaunches().collect { resultData ->
+                when (resultData) {
+                    is ResultData.Success -> {
+                        _uiState.value = LaunchListUiState.Success(
+                            resultData.data.docs.map {
+                                it.toLaunchPresentation(it)
+                            }
+                        )
 
+                    }
+
+                    is ResultData.Error -> LaunchListUiState.Error(resultData.throwable)
                 }
-                is ResultData.Error -> LaunchListUiState.Error(result.exception)
             }
-            _launchList.value = LaunchListUiState.Loading(false)
+            _uiState.value = LaunchListUiState.Loading(false)
         }
     }
 
@@ -48,5 +56,5 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
 sealed interface LaunchListUiState {
     data class Loading(val value: Boolean) : LaunchListUiState
     data class Success(val data: List<LaunchModel>) : LaunchListUiState
-    data class Error(val exception: Exception) : LaunchListUiState
+    data class Error(val throwable: Throwable) : LaunchListUiState
 }
