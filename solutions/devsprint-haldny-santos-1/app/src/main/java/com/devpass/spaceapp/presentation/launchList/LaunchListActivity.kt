@@ -67,8 +67,8 @@ class LaunchListActivity : AppCompatActivity() {
     }
 
     private fun setupProgress(value: Boolean) {
-        binding.pbLaunches.isActivated = value
-        binding.pbLaunches.isVisible = value
+        binding.lottieLoading.playAnimation()
+        binding.lottieLoading.isVisible = value
     }
 
     private fun setupToolbar() {
