@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devpass.spaceapp.R
 import com.devpass.spaceapp.data.datasource.remote.retrofit.RetrofitClient
@@ -12,6 +15,7 @@ import com.devpass.spaceapp.data.repository.FetchLaunchesRepository
 import com.devpass.spaceapp.data.repository.FetchLaunchesRepositoryImpl
 import com.devpass.spaceapp.databinding.ActivityLaunchListBinding
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchListAdapter
+import kotlinx.coroutines.launch
 
 class LaunchListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLaunchListBinding
@@ -41,18 +45,22 @@ class LaunchListActivity : AppCompatActivity() {
     }
 
     private fun setupObserve() {
-        viewModel.launchList.observe(this) {
-            when (it) {
-                is LaunchListUiState.Error -> {
-                    TODO()
-                }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect {
+                    when (it) {
+                        is LaunchListUiState.Error -> {
+                            TODO()
+                        }
 
-                is LaunchListUiState.Success -> {
-                    adapter.submitList(it.data)
-                }
+                        is LaunchListUiState.Success -> {
+                            adapter.submitList(it.data)
+                        }
 
-                is LaunchListUiState.Loading -> {
-                    setupProgress(it.value)
+                        is LaunchListUiState.Loading -> {
+                            setupProgress(it.value)
+                        }
+                    }
                 }
             }
         }

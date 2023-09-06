@@ -9,20 +9,26 @@ import com.devpass.spaceapp.data.ResultData
 import com.devpass.spaceapp.data.datasource.remote.toLaunchPresentation
 import com.devpass.spaceapp.data.repository.FetchLaunchesRepository
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class LaunchListViewModel(private val repository: FetchLaunchesRepository) : ViewModel() {
 
-    private val _launchList = MutableLiveData<LaunchListUiState>()
-    var launchList: LiveData<LaunchListUiState> = _launchList
+    private val _uiState: MutableStateFlow<LaunchListUiState> = MutableStateFlow(
+        LaunchListUiState.Success(
+            emptyList()
+        )
+    )
+    val uiState: StateFlow<LaunchListUiState> = _uiState
 
     fun getLaunches() {
         viewModelScope.launch {
-            _launchList.value = LaunchListUiState.Loading(true)
+            _uiState.value = LaunchListUiState.Loading(true)
             repository.getsLaunches().collect { resultData ->
                 when (resultData) {
                     is ResultData.Success -> {
-                        _launchList.value = LaunchListUiState.Success(
+                        _uiState.value = LaunchListUiState.Success(
                             resultData.data.docs.map {
                                 it.toLaunchPresentation(it)
                             }
@@ -33,7 +39,7 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
                     is ResultData.Error -> LaunchListUiState.Error(resultData.throwable)
                 }
             }
-            _launchList.value = LaunchListUiState.Loading(false)
+            _uiState.value = LaunchListUiState.Loading(false)
         }
     }
 
