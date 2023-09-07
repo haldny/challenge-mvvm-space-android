@@ -24,7 +24,7 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
 
     fun getLaunches() {
         viewModelScope.launch {
-            _uiState.value = LaunchListUiState.Loading(true)
+            _uiState.value = LaunchListUiState.Loading
             repository.getsLaunches().collect { resultData ->
                 when (resultData) {
                     is ResultData.Success -> {
@@ -39,7 +39,6 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
                     is ResultData.Error -> LaunchListUiState.Error(resultData.throwable)
                 }
             }
-            _uiState.value = LaunchListUiState.Loading(false)
         }
     }
 
@@ -54,7 +53,7 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
 }
 
 sealed interface LaunchListUiState {
-    data class Loading(val value: Boolean) : LaunchListUiState
+    object Loading : LaunchListUiState
     data class Success(val data: List<LaunchModel>) : LaunchListUiState
     data class Error(val throwable: Throwable) : LaunchListUiState
 }

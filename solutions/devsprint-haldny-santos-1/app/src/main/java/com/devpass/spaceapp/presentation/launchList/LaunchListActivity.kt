@@ -55,10 +55,11 @@ class LaunchListActivity : AppCompatActivity() {
 
                         is LaunchListUiState.Success -> {
                             adapter.submitList(it.data)
+                            setupLoadingVisibility(false)
                         }
 
                         is LaunchListUiState.Loading -> {
-                            setupProgress(it.value)
+                            setupLoadingVisibility(true)
                         }
                     }
                 }
@@ -66,9 +67,11 @@ class LaunchListActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupProgress(value: Boolean) {
-        binding.lottieLoading.playAnimation()
-        binding.lottieLoading.isVisible = value
+    private fun setupLoadingVisibility(visibility: Boolean) {
+        with(binding.lottieLoading) {
+            isVisible = visibility
+            if (visibility) playAnimation()
+        }
     }
 
     private fun setupToolbar() {
