@@ -1,5 +1,6 @@
 package com.devpass.spaceapp.presentation.launchList
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +15,9 @@ import com.devpass.spaceapp.data.datasource.remote.source.RemoteDataSourceImpl
 import com.devpass.spaceapp.data.repository.FetchLaunchesRepository
 import com.devpass.spaceapp.data.repository.FetchLaunchesRepositoryImpl
 import com.devpass.spaceapp.databinding.ActivityLaunchListBinding
+import com.devpass.spaceapp.presentation.LaunchActivity
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchListAdapter
+import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
 import kotlinx.coroutines.launch
 
 class LaunchListActivity : AppCompatActivity() {
@@ -55,10 +58,11 @@ class LaunchListActivity : AppCompatActivity() {
 
                         is LaunchListUiState.Success -> {
                             adapter.submitList(it.data)
+                            setupLoadingVisibility(false)
                         }
 
                         is LaunchListUiState.Loading -> {
-                            setupProgress(it.value)
+                            setupLoadingVisibility(true)
                         }
                     }
                 }
@@ -66,9 +70,11 @@ class LaunchListActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupProgress(value: Boolean) {
-        binding.pbLaunches.isActivated = value
-        binding.pbLaunches.isVisible = value
+    private fun setupLoadingVisibility(visibility: Boolean) {
+        with(binding.lottieLoading) {
+            isVisible = visibility
+            if (visibility) playAnimation()
+        }
     }
 
     private fun setupToolbar() {
@@ -79,8 +85,22 @@ class LaunchListActivity : AppCompatActivity() {
     }
 
     private fun setupRecycleView() {
-        adapter = LaunchListAdapter()
+        adapter = LaunchListAdapter {
+            setupLaunchActivity(it)
+        }
         binding.rvLaunches.adapter = adapter
         binding.rvLaunches.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun setupLaunchActivity(launchModel: LaunchModel) {
+        Intent(baseContext, LaunchActivity::class.java).also {
+            it.putExtra(LAUNCH_MODEL, launchModel)
+        }.run {
+            baseContext.startActivity(this)
+        }
+    }
+
+    private companion object {
+        const val LAUNCH_MODEL = "LAUNCH_MODEL"
     }
 }

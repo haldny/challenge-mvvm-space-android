@@ -8,10 +8,11 @@ import com.bumptech.glide.Glide
 import com.devpass.spaceapp.R
 import com.devpass.spaceapp.databinding.ListItemBinding
 
-class LaunchListAdapter : ListAdapter<LaunchModel, LaunchViewHolder>(LaunchModel) {
+class LaunchListAdapter(private var onItemClick: (LaunchModel) -> Unit) :
+    ListAdapter<LaunchModel, LaunchViewHolder>(LaunchModel) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaunchViewHolder {
-        return LaunchViewHolder.from(parent)
+        return LaunchViewHolder.from(parent, onItemClick)
     }
 
     override fun onBindViewHolder(holder: LaunchViewHolder, position: Int) {
@@ -19,7 +20,10 @@ class LaunchListAdapter : ListAdapter<LaunchModel, LaunchViewHolder>(LaunchModel
     }
 }
 
-class LaunchViewHolder(private val binding: ListItemBinding) :
+class LaunchViewHolder(
+    private val binding: ListItemBinding,
+    private var onItemClick: (LaunchModel) -> Unit
+) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(model: LaunchModel) = binding.apply {
@@ -33,14 +37,23 @@ class LaunchViewHolder(private val binding: ListItemBinding) :
         binding.tvStatus.text =
             if (model.status) root.context.getString(R.string.text_status_success)
             else root.context.getString(R.string.text_status_failure)
+
+
+        itemView.setOnClickListener {
+            onItemClick(model)
+        }
     }
 
     companion object {
-        fun from(parent: ViewGroup): LaunchViewHolder {
+        fun from(
+            parent: ViewGroup,
+            onItemClick: (LaunchModel) -> Unit
+        ): LaunchViewHolder {
             return LaunchViewHolder(
                 ListItemBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
-                )
+                ),
+                onItemClick
             )
         }
     }
