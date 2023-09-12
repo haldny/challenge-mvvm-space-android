@@ -9,5 +9,5 @@ import com.devpass.spaceapp.data.datasource.remote.model.LandpadsDetail as Landp
 interface RemoteDataSource {
     suspend fun getLandpadsDetail(id: String): LandpadsDetailData
     suspend fun getRocketsDetail(id: String): RocketsDetailData
-    suspend fun getsLaunches(params: QueryParams): Flow<LaunchesPageData>
+    suspend fun getsLaunches(params: QueryParams): LaunchesPageData
 }

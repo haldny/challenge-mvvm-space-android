@@ -52,4 +52,9 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loading" />
 
+    <include
+        android:id="@+id/include_view_error_state"
+        android:visibility="gone"
+        layout="@layout/include_error_view" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

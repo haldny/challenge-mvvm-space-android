@@ -32,5 +32,7 @@
     <string name="text_status_success">Sucesso</string>
     <string name="text_status_failure">Falha</string>
     <string name="text_toolbar_launch_list" translatable="false">Space App</string>
+    <string name="text_error">Erro</string>
+    <string name="text_try_again">Tente novamente</string>
 
 </resources>

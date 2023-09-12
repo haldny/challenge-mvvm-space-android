@@ -1,7 +1,5 @@
 package com.devpass.spaceapp.presentation.launchList
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -11,6 +9,8 @@ import com.devpass.spaceapp.data.repository.FetchLaunchesRepository
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class LaunchListViewModel(private val repository: FetchLaunchesRepository) : ViewModel() {
@@ -24,21 +24,27 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
 
     fun getLaunches() {
         viewModelScope.launch {
-            _uiState.value = LaunchListUiState.Loading
-            repository.getsLaunches().collect { resultData ->
-                when (resultData) {
-                    is ResultData.Success -> {
-                        _uiState.value = LaunchListUiState.Success(
-                            resultData.data.docs.map {
-                                it.toLaunchPresentation(it)
-                            }
-                        )
-
-                    }
-
-                    is ResultData.Error -> LaunchListUiState.Error(resultData.throwable)
+            repository.getsLaunches()
+                .onStart {
+                    _uiState.value = LaunchListUiState.Loading
                 }
-            }
+                .catch { throwable ->
+                    _uiState.value = LaunchListUiState.Error(throwable)
+                }
+                .collect { resultData ->
+                    when (resultData) {
+                        is ResultData.Success -> {
+                            _uiState.value = LaunchListUiState.Success(
+                                resultData.data.docs.map {
+                                    it.toLaunchPresentation(it)
+                                }
+                            )
+                        }
+
+                        is ResultData.Error -> _uiState.value =
+                            LaunchListUiState.Error(resultData.throwable)
+                    }
+                }
         }
     }
 
