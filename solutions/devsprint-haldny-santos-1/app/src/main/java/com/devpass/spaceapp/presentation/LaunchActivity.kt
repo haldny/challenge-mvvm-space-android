@@ -2,6 +2,7 @@ package com.devpass.spaceapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.devpass.spaceapp.R
 import com.devpass.spaceapp.databinding.ActivityTabBinding
@@ -27,6 +28,9 @@ class LaunchActivity : AppCompatActivity() {
 
     private fun setupViews() {
         with(binding) {
+            btRunBack.setOnClickListener {
+                onBackPressed()
+            }
             tvTittle.text = model?.name
             tvDate.text = model?.date
             tvStatus.text =
@@ -42,24 +46,41 @@ class LaunchActivity : AppCompatActivity() {
     }
 
     private fun setupViewPager() {
-        val fragments = listOf(
-            FragmentDetails.newInstance(model?.details),
-            RocketFragment(),
-            FragmentLaunchpad()
-        )
-        val fragmentsPageTitle = listOf("Details", "Rocket", "Launchpad")
-
         val viewPagerAdapter = ViewPagerAdapter(
-            fragments = fragments,
+            fragments = getFragments(),
             fragmentManager = supportFragmentManager,
-            tittles = fragmentsPageTitle
+            tittles = getPagesTitle()
         )
 
         binding.viewPager.adapter = viewPagerAdapter
         binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 
+
+    private fun getPagesTitle(): List<String> {
+        return if (model?.details.isNullOrEmpty()) {
+            listOf(ROCKET, LAUNCHPAD)
+        } else {
+            listOf(DETAILS, ROCKET, LAUNCHPAD)
+        }
+    }
+
+    private fun getFragments(): List<Fragment> {
+        return if (model?.details.isNullOrEmpty()) {
+            listOf(RocketFragment(), FragmentLaunchpad())
+        } else {
+            listOf(
+                FragmentDetails.newInstance(model?.details),
+                RocketFragment(),
+                FragmentLaunchpad()
+            )
+        }
+    }
+
     private companion object {
         const val LAUNCH_MODEL = "LAUNCH_MODEL"
+        const val DETAILS = "Details"
+        const val ROCKET = "Rocket"
+        const val LAUNCHPAD = "Launchpad"
     }
 }
