@@ -28,9 +28,6 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
                 .onStart {
                     _uiState.value = LaunchListUiState.Loading
                 }
-                .catch { throwable ->
-                    _uiState.value = LaunchListUiState.Error(throwable)
-                }
                 .collect { resultData ->
                     when (resultData) {
                         is ResultData.Success -> {

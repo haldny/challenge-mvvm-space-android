@@ -94,6 +94,7 @@ class LaunchListActivity : AppCompatActivity() {
     }
 
     private fun setupError() {
+        binding.tvNextLaunch.isVisible = false
         with(binding.includeViewErrorState) {
             this.root.isVisible = true
             lottieError.playAnimation()
