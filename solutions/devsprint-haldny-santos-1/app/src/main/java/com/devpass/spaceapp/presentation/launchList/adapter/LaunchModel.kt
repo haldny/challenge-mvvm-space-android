@@ -10,6 +10,7 @@ data class LaunchModel(
     val number: String,
     var date: String,
     val status: Boolean,
+    val details: String,
     val image: String
 ) : Parcelable {
     companion object : DiffUtil.ItemCallback<LaunchModel>() {

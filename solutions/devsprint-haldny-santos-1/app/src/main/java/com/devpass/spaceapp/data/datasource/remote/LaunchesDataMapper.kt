@@ -5,8 +5,9 @@ import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel as Launc
 
 fun Launch.toLaunchPresentation(launch: Launch) = LaunchPresentation(
     name = launch.name,
-    number = launch.id,
+    number = launch.flightNumber.toString(),
     date = "null",
     status = launch.success,
-    image =  launch.links.patch.small
+    image =  launch.links.patch.small,
+    details = launch.details ?: ""
 )

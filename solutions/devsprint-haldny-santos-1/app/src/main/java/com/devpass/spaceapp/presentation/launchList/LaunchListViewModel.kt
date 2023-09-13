@@ -9,7 +9,6 @@ import com.devpass.spaceapp.data.repository.FetchLaunchesRepository
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
