@@ -12,14 +12,15 @@ import com.devpass.spaceapp.presentation.rocket.RocketFragment
 class LaunchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTabBinding
-    private var model: LaunchModel? = null
+
+    private val model: LaunchModel? by lazy {
+        intent.getParcelableExtra(LAUNCH_MODEL)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTabBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        model = intent.getParcelableExtra(LAUNCH_MODEL)
 
         setupViewPager()
         setupViews()
@@ -67,11 +68,14 @@ class LaunchActivity : AppCompatActivity() {
 
     private fun getFragments(): List<Fragment> {
         return if (model?.details.isNullOrEmpty()) {
-            listOf(RocketFragment(), FragmentLaunchpad())
+            listOf(
+                FragmentDetails.newInstance(model?.details),
+                RocketFragment.newInstance(model?.rocketId)
+            )
         } else {
             listOf(
                 FragmentDetails.newInstance(model?.details),
-                RocketFragment(),
+                RocketFragment.newInstance(model?.rocketId),
                 FragmentLaunchpad()
             )
         }

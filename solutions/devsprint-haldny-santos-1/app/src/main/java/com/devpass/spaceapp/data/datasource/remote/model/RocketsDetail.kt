@@ -10,5 +10,5 @@ data class RocketsDetail(
     @Json(name = "description")
     val description: String,
     @Json(name = "flickr_images")
-    val flickrImages: List<String>
+    val flickrImages: List<String>?
 )

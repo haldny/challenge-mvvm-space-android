@@ -1,4 +1,4 @@
-package com.devpass.spaceapp.data.datasource.remote
+package com.devpass.spaceapp.data.datasource.remote.mapper
 
 import com.devpass.spaceapp.data.datasource.remote.model.Launch
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel as LaunchPresentation
@@ -9,5 +9,6 @@ fun Launch.toLaunchPresentation(launch: Launch) = LaunchPresentation(
     date = "null",
     status = launch.success,
     image =  launch.links.patch.small,
-    details = launch.details ?: ""
+    details = launch.details ?: "",
+    rocketId = launch.rocket
 )

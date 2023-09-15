@@ -11,7 +11,8 @@ data class LaunchModel(
     var date: String,
     val status: Boolean,
     val details: String,
-    val image: String
+    val image: String,
+    val rocketId: String,
 ) : Parcelable {
     companion object : DiffUtil.ItemCallback<LaunchModel>() {
         override fun areItemsTheSame(oldItem: LaunchModel, newItem: LaunchModel): Boolean {

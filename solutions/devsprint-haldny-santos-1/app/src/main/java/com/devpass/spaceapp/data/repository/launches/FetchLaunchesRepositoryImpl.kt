@@ -1,11 +1,11 @@
-package com.devpass.spaceapp.data.repository
+package com.devpass.spaceapp.data.repository.launches
 
+import com.devpass.spaceapp.data.ResultData
 import com.devpass.spaceapp.data.datasource.remote.model.LaunchesPage
 import com.devpass.spaceapp.data.datasource.remote.model.OptionsRequest
 import com.devpass.spaceapp.data.datasource.remote.model.QueryParams
 import com.devpass.spaceapp.data.datasource.remote.model.SortRequest
 import com.devpass.spaceapp.data.datasource.remote.source.RemoteDataSource
-import com.devpass.spaceapp.data.ResultData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
