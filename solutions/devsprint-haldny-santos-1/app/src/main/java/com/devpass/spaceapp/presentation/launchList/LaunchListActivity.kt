@@ -53,7 +53,8 @@ class LaunchListActivity : AppCompatActivity() {
                 viewModel.uiState.collect {
                     when (it) {
                         is LaunchListUiState.Error -> {
-                            TODO()
+                            setupLoadingVisibility(false)
+                            setupError()
                         }
 
                         is LaunchListUiState.Success -> {
@@ -90,6 +91,18 @@ class LaunchListActivity : AppCompatActivity() {
         }
         binding.rvLaunches.adapter = adapter
         binding.rvLaunches.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun setupError() {
+        binding.tvNextLaunch.isVisible = false
+        with(binding.includeViewErrorState) {
+            this.root.isVisible = true
+            lottieError.playAnimation()
+            btRetry.setOnClickListener {
+                viewModel.getLaunches()
+                this.root.isVisible = false
+            }
+        }
     }
 
     private fun setupLaunchActivity(launchModel: LaunchModel) {

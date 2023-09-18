@@ -17,7 +17,7 @@ class RemoteDataSourceImpl(private val apiService: SpaceXAPIService) : RemoteDat
         return apiService.getRocketsDetail(id)
     }
 
-    override suspend fun getsLaunches(params: QueryParams): Flow<LaunchesPage> = flow {
-        emit(apiService.getsLaunches(params))
+    override suspend fun getsLaunches(params: QueryParams): LaunchesPage {
+        return apiService.getsLaunches(params)
     }
 }

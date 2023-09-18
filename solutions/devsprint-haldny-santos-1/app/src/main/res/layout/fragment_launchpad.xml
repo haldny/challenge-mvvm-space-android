@@ -52,7 +52,7 @@
             android:layout_marginStart="@dimen/margin_start_view_more"
             android:layout_marginBottom="@dimen/margin_bottom_view_more"
             android:text="@string/view_more"
-            android:textColor="@color/color_background_toolbar"
+            android:textColor="@color/color_background"
             android:textSize="@dimen/size_view_more"
             android:textStyle="bold" />
 
