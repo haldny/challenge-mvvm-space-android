@@ -14,9 +14,11 @@ data class Launch(
     @Json(name = "date_utc")
     val dateUtc: String,
     @Json(name = "details")
-    val details: String,
+    val details: String?,
     @Json(name = "launchpad")
-    val flightNumber: String,
+    val launchpad: String,
+    @Json(name = "flight_number")
+    val flightNumber: Int,
     @Json(name = "id")
     val id: String
 )

@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devpass.spaceapp.R
 import com.devpass.spaceapp.data.datasource.remote.retrofit.RetrofitClient
 import com.devpass.spaceapp.data.datasource.remote.source.RemoteDataSourceImpl
-import com.devpass.spaceapp.data.repository.FetchLaunchesRepository
-import com.devpass.spaceapp.data.repository.FetchLaunchesRepositoryImpl
+import com.devpass.spaceapp.data.repository.launches.FetchLaunchesRepository
+import com.devpass.spaceapp.data.repository.launches.FetchLaunchesRepositoryImpl
 import com.devpass.spaceapp.databinding.ActivityLaunchListBinding
 import com.devpass.spaceapp.presentation.LaunchActivity
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchListAdapter

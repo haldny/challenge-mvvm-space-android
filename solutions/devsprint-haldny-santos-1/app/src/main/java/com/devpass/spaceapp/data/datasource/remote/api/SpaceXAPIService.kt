@@ -12,7 +12,7 @@ import retrofit2.http.Path
 interface SpaceXAPIService {
     @GET("/launchpads/{id}")
     suspend fun getLandpadsDetail(@Path("id") id: String): LandpadsDetailResponse
-    @GET("/rockets/{id}")
+    @GET("v4/rockets/{id}")
     suspend fun getRocketsDetail(@Path("id") id: String): RocketsDetailResponse
     @POST("v5/launches/query")
     suspend fun getsLaunches(@Body params: QueryParams): LaunchesPageResponse
