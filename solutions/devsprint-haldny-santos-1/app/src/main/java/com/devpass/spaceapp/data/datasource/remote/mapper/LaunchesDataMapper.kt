@@ -9,6 +9,6 @@ fun Launch.toLaunchPresentation(launch: Launch) = LaunchPresentation(
     date = "null",
     status = launch.success,
     image =  launch.links.patch.small,
-    details = launch.details ?: "",
+    details = launch.details.orEmpty(),
     rocketId = launch.rocket
 )
