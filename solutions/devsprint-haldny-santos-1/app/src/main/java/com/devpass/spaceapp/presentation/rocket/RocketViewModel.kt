@@ -3,15 +3,15 @@ package com.devpass.spaceapp.presentation.rocket
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.devpass.spaceapp.data.ResultData
-import com.devpass.spaceapp.data.datasource.remote.mapper.toRocketPresentation
-import com.devpass.spaceapp.data.repository.rocket.RocketRepository
+import com.devpass.spaceapp.domain.mapper.toRocketPresentation
+import com.devpass.spaceapp.domain.usecase.RocketUseCase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class RocketViewModel(private val repository: RocketRepository): ViewModel() {
+class RocketViewModel(private val rocketUseCase: RocketUseCase): ViewModel() {
 
     private val _uiState: MutableStateFlow<RocketUiState> = MutableStateFlow(
         RocketUiState.Loading
@@ -20,7 +20,7 @@ class RocketViewModel(private val repository: RocketRepository): ViewModel() {
 
     fun getRocket(id: String) {
         GlobalScope.launch {
-            repository.getRocketsDetail(id)
+            rocketUseCase(id)
                 .onStart {
                     _uiState.value = RocketUiState.Loading
                 }
@@ -40,10 +40,10 @@ class RocketViewModel(private val repository: RocketRepository): ViewModel() {
     }
 
     companion object {
-        fun providerFactory(repository: RocketRepository): ViewModelProvider.Factory =
+        fun providerFactory(rocketUseCase: RocketUseCase): ViewModelProvider.Factory =
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return RocketViewModel(repository = repository) as T
+                    return RocketViewModel(rocketUseCase = rocketUseCase) as T
                 }
             }
     }

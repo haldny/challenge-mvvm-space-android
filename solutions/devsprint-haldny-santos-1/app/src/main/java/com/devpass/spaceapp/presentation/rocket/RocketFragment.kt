@@ -16,6 +16,7 @@ import com.devpass.spaceapp.data.datasource.remote.retrofit.RetrofitClient
 import com.devpass.spaceapp.data.datasource.remote.source.RemoteDataSourceImpl
 import com.devpass.spaceapp.data.repository.rocket.RocketRepositoryImpl
 import com.devpass.spaceapp.databinding.FragmentRocketBinding
+import com.devpass.spaceapp.domain.usecase.RocketUseCaseImpl
 import kotlinx.coroutines.launch
 
 class RocketFragment : Fragment() {
@@ -45,7 +46,8 @@ class RocketFragment : Fragment() {
     private fun init() {
         val remoteDataSource = RemoteDataSourceImpl(RetrofitClient.getSpaceXAPI())
         val repository = RocketRepositoryImpl(remoteDataSource)
-        val factory = RocketViewModel.providerFactory(repository)
+        val rocketUseCase = RocketUseCaseImpl(repository)
+        val factory = RocketViewModel.providerFactory(rocketUseCase)
 
         viewModel = ViewModelProvider(requireActivity(), factory)
             .get(modelClass = RocketViewModel::class.java)

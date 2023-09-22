@@ -1,13 +1,12 @@
 package com.devpass.spaceapp.data.datasource.remote.source
 
-import com.devpass.spaceapp.data.datasource.remote.model.LaunchesPage as LaunchesPageData
 import com.devpass.spaceapp.data.datasource.remote.model.QueryParams
-import kotlinx.coroutines.flow.Flow
-import com.devpass.spaceapp.data.datasource.remote.model.RocketsDetail as RocketsDetailData
-import com.devpass.spaceapp.data.datasource.remote.model.LandpadsDetail as LandpadsDetailData
+import com.devpass.spaceapp.domain.model.LandpadsDetail as LandpadsDetailDomain
+import com.devpass.spaceapp.domain.model.LaunchesPage as LaunchesPageDomain
+import com.devpass.spaceapp.domain.model.RocketsDetail as RocketsDetailDomain
 
 interface RemoteDataSource {
-    suspend fun getLandpadsDetail(id: String): LandpadsDetailData
-    suspend fun getRocketsDetail(id: String): RocketsDetailData
-    suspend fun getsLaunches(params: QueryParams): LaunchesPageData
+    suspend fun getLandpadsDetail(id: String): LandpadsDetailDomain
+    suspend fun getRocketsDetail(id: String): RocketsDetailDomain
+    suspend fun getsLaunches(params: QueryParams): LaunchesPageDomain
 }
