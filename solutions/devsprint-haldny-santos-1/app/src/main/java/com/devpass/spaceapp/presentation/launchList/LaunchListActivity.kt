@@ -15,6 +15,8 @@ import com.devpass.spaceapp.data.datasource.remote.source.RemoteDataSourceImpl
 import com.devpass.spaceapp.data.repository.launches.FetchLaunchesRepository
 import com.devpass.spaceapp.data.repository.launches.FetchLaunchesRepositoryImpl
 import com.devpass.spaceapp.databinding.ActivityLaunchListBinding
+import com.devpass.spaceapp.domain.usecase.FetchLaunchesUseCase
+import com.devpass.spaceapp.domain.usecase.FetchLaunchesUseCaseImpl
 import com.devpass.spaceapp.presentation.LaunchActivity
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchListAdapter
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
@@ -25,9 +27,10 @@ class LaunchListActivity : AppCompatActivity() {
 
     private lateinit var adapter: LaunchListAdapter
     private lateinit var repository: FetchLaunchesRepository
+    private lateinit var fetchLaunchesUseCase: FetchLaunchesUseCase
 
     private val viewModel: LaunchListViewModel by viewModels {
-        LaunchListViewModel.providerFactory(repository)
+        LaunchListViewModel.providerFactory(fetchLaunchesUseCase)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +47,7 @@ class LaunchListActivity : AppCompatActivity() {
     private fun init() {
         val remoteDataSource = RemoteDataSourceImpl(RetrofitClient.getSpaceXAPI())
         repository = FetchLaunchesRepositoryImpl(remoteDataSource)
+        fetchLaunchesUseCase = FetchLaunchesUseCaseImpl(repository)
         viewModel.getLaunches()
     }
 

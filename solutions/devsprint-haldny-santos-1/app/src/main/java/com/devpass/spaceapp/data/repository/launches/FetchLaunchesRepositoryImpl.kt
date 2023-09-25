@@ -1,7 +1,7 @@
 package com.devpass.spaceapp.data.repository.launches
 
 import com.devpass.spaceapp.data.ResultData
-import com.devpass.spaceapp.data.datasource.remote.model.LaunchesPage
+import com.devpass.spaceapp.domain.model.LaunchesPage as LaunchesPageDomain
 import com.devpass.spaceapp.data.datasource.remote.model.OptionsRequest
 import com.devpass.spaceapp.data.datasource.remote.model.QueryParams
 import com.devpass.spaceapp.data.datasource.remote.model.SortRequest
@@ -15,7 +15,7 @@ private const val FLIGHT_NUMBER = "asc"
 class FetchLaunchesRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
 ) : FetchLaunchesRepository {
-    override suspend fun getsLaunches(): Flow<ResultData<LaunchesPage>> = flow {
+    override suspend fun getsLaunches(): Flow<ResultData<LaunchesPageDomain>> = flow {
         return@flow try {
             val result = remoteDataSource.getsLaunches(
                 QueryParams(

@@ -4,15 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.devpass.spaceapp.data.ResultData
-import com.devpass.spaceapp.data.datasource.remote.mapper.toLaunchPresentation
-import com.devpass.spaceapp.data.repository.launches.FetchLaunchesRepository
+import com.devpass.spaceapp.domain.mapper.toLaunchPresentation
+import com.devpass.spaceapp.domain.usecase.FetchLaunchesUseCase
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class LaunchListViewModel(private val repository: FetchLaunchesRepository) : ViewModel() {
+class LaunchListViewModel(private val fetchLaunchesUseCase: FetchLaunchesUseCase) : ViewModel() {
 
     private val _uiState: MutableStateFlow<LaunchListUiState> = MutableStateFlow(
         LaunchListUiState.Success(
@@ -23,7 +23,7 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
 
     fun getLaunches() {
         viewModelScope.launch {
-            repository.getsLaunches()
+            fetchLaunchesUseCase()
                 .onStart {
                     _uiState.value = LaunchListUiState.Loading
                 }
@@ -45,10 +45,10 @@ class LaunchListViewModel(private val repository: FetchLaunchesRepository) : Vie
     }
 
     companion object {
-        fun providerFactory(repository: FetchLaunchesRepository): ViewModelProvider.Factory =
+        fun providerFactory(fetchLaunchesUseCase: FetchLaunchesUseCase): ViewModelProvider.Factory =
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return LaunchListViewModel(repository = repository) as T
+                    return LaunchListViewModel(fetchLaunchesUseCase = fetchLaunchesUseCase) as T
                 }
             }
     }
