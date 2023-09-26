@@ -5,10 +5,12 @@ import com.devpass.spaceapp.data.datasource.remote.source.RemoteDataSource
 import com.devpass.spaceapp.domain.model.RocketsDetail as RocketsDetailDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class RocketRepositoryImpl(
+class RocketRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
 ) : RocketRepository {
+
     override suspend fun getRocketsDetail(id: String): Flow<ResultData<RocketsDetailDomain>> = flow {
         return@flow try {
             val result = remoteDataSource.getRocketsDetail(id)

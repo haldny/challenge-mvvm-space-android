@@ -8,7 +8,9 @@ import com.devpass.spaceapp.R
 import com.devpass.spaceapp.databinding.ActivityTabBinding
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
 import com.devpass.spaceapp.presentation.rocket.RocketFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LaunchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTabBinding

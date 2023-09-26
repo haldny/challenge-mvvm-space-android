@@ -2,36 +2,27 @@ package com.devpass.spaceapp.presentation.launchList
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devpass.spaceapp.R
-import com.devpass.spaceapp.data.datasource.remote.retrofit.RetrofitClient
-import com.devpass.spaceapp.data.datasource.remote.source.RemoteDataSourceImpl
-import com.devpass.spaceapp.data.repository.launches.FetchLaunchesRepository
-import com.devpass.spaceapp.data.repository.launches.FetchLaunchesRepositoryImpl
 import com.devpass.spaceapp.databinding.ActivityLaunchListBinding
-import com.devpass.spaceapp.domain.usecase.FetchLaunchesUseCase
-import com.devpass.spaceapp.domain.usecase.FetchLaunchesUseCaseImpl
 import com.devpass.spaceapp.presentation.LaunchActivity
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchListAdapter
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LaunchListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLaunchListBinding
 
     private lateinit var adapter: LaunchListAdapter
-    private lateinit var repository: FetchLaunchesRepository
-    private lateinit var fetchLaunchesUseCase: FetchLaunchesUseCase
-
-    private val viewModel: LaunchListViewModel by viewModels {
-        LaunchListViewModel.providerFactory(fetchLaunchesUseCase)
-    }
+    private lateinit var viewModel: LaunchListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +36,7 @@ class LaunchListActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val remoteDataSource = RemoteDataSourceImpl(RetrofitClient.getSpaceXAPI())
-        repository = FetchLaunchesRepositoryImpl(remoteDataSource)
-        fetchLaunchesUseCase = FetchLaunchesUseCaseImpl(repository)
+        viewModel = ViewModelProvider(this)[LaunchListViewModel::class.java]
         viewModel.getLaunches()
     }
 

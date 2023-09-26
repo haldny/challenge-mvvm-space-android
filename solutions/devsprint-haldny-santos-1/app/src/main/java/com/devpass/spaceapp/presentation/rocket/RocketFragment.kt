@@ -12,13 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
-import com.devpass.spaceapp.data.datasource.remote.retrofit.RetrofitClient
-import com.devpass.spaceapp.data.datasource.remote.source.RemoteDataSourceImpl
-import com.devpass.spaceapp.data.repository.rocket.RocketRepositoryImpl
 import com.devpass.spaceapp.databinding.FragmentRocketBinding
-import com.devpass.spaceapp.domain.usecase.RocketUseCaseImpl
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class RocketFragment : Fragment() {
 
     private var binding: FragmentRocketBinding? = null
@@ -44,15 +42,9 @@ class RocketFragment : Fragment() {
     }
 
     private fun init() {
-        val remoteDataSource = RemoteDataSourceImpl(RetrofitClient.getSpaceXAPI())
-        val repository = RocketRepositoryImpl(remoteDataSource)
-        val rocketUseCase = RocketUseCaseImpl(repository)
-        val factory = RocketViewModel.providerFactory(rocketUseCase)
-
-        viewModel = ViewModelProvider(requireActivity(), factory)
+        viewModel = ViewModelProvider(requireActivity())
             .get(modelClass = RocketViewModel::class.java)
         viewModel.getRocket(id)
-
     }
 
     private fun setupViews(name: String, description: String) {
