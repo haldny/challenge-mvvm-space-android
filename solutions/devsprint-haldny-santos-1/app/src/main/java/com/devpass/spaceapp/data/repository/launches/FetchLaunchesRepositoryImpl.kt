@@ -8,11 +8,12 @@ import com.devpass.spaceapp.data.datasource.remote.model.SortRequest
 import com.devpass.spaceapp.data.datasource.remote.source.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 private const val LIMIT = 10
 private const val FLIGHT_NUMBER = "asc"
 
-class FetchLaunchesRepositoryImpl(
+class FetchLaunchesRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
 ) : FetchLaunchesRepository {
     override suspend fun getsLaunches(): Flow<ResultData<LaunchesPageDomain>> = flow {

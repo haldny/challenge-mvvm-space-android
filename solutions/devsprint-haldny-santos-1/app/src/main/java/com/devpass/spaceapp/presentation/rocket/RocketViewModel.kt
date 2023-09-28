@@ -1,17 +1,21 @@
 package com.devpass.spaceapp.presentation.rocket
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.devpass.spaceapp.data.ResultData
 import com.devpass.spaceapp.domain.mapper.toRocketPresentation
 import com.devpass.spaceapp.domain.usecase.RocketUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RocketViewModel(private val rocketUseCase: RocketUseCase): ViewModel() {
+@HiltViewModel
+class RocketViewModel @Inject constructor(
+    private val rocketUseCase: RocketUseCase
+): ViewModel() {
 
     private val _uiState: MutableStateFlow<RocketUiState> = MutableStateFlow(
         RocketUiState.Loading
@@ -37,15 +41,6 @@ class RocketViewModel(private val rocketUseCase: RocketUseCase): ViewModel() {
                     }
                 }
         }
-    }
-
-    companion object {
-        fun providerFactory(rocketUseCase: RocketUseCase): ViewModelProvider.Factory =
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return RocketViewModel(rocketUseCase = rocketUseCase) as T
-                }
-            }
     }
 }
 

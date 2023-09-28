@@ -5,11 +5,15 @@ import com.devpass.spaceapp.data.datasource.remote.mapper.toLandpadsDetailDomain
 import com.devpass.spaceapp.data.datasource.remote.mapper.toLaunchesPageDomain
 import com.devpass.spaceapp.data.datasource.remote.mapper.toRocketDomain
 import com.devpass.spaceapp.data.datasource.remote.model.QueryParams
+import javax.inject.Inject
 import com.devpass.spaceapp.domain.model.LandpadsDetail as LandpadsDetailDomain
 import com.devpass.spaceapp.domain.model.RocketsDetail as RocketsDetailDomain
 import com.devpass.spaceapp.domain.model.LaunchesPage as LaunchesPageDomain
 
-class RemoteDataSourceImpl(private val apiService: SpaceXAPIService) : RemoteDataSource {
+class RemoteDataSourceImpl @Inject constructor(
+    private val apiService: SpaceXAPIService
+) : RemoteDataSource {
+
     override suspend fun getLandpadsDetail(id: String): LandpadsDetailDomain {
         return apiService.getLandpadsDetail(id).toLandpadsDetailDomain()
     }

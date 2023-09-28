@@ -1,18 +1,22 @@
 package com.devpass.spaceapp.presentation.launchList
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.devpass.spaceapp.data.ResultData
 import com.devpass.spaceapp.domain.mapper.toLaunchPresentation
 import com.devpass.spaceapp.domain.usecase.FetchLaunchesUseCase
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LaunchListViewModel(private val fetchLaunchesUseCase: FetchLaunchesUseCase) : ViewModel() {
+@HiltViewModel
+class LaunchListViewModel @Inject constructor(
+    private val fetchLaunchesUseCase: FetchLaunchesUseCase
+) : ViewModel() {
 
     private val _uiState: MutableStateFlow<LaunchListUiState> = MutableStateFlow(
         LaunchListUiState.Success(
@@ -42,15 +46,6 @@ class LaunchListViewModel(private val fetchLaunchesUseCase: FetchLaunchesUseCase
                     }
                 }
         }
-    }
-
-    companion object {
-        fun providerFactory(fetchLaunchesUseCase: FetchLaunchesUseCase): ViewModelProvider.Factory =
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return LaunchListViewModel(fetchLaunchesUseCase = fetchLaunchesUseCase) as T
-                }
-            }
     }
 }
 
