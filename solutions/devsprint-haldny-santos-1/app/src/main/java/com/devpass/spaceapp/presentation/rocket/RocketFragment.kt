@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class RocketFragment : Fragment() {
 
     private var binding: FragmentRocketBinding? = null
-    private lateinit var viewModel: RocketViewModel
+    private val viewModel: RocketViewModel by viewModels()
 
     private val id by lazy {
         arguments?.get(ARG_ID).toString()
@@ -42,8 +42,6 @@ class RocketFragment : Fragment() {
     }
 
     private fun init() {
-        viewModel = ViewModelProvider(requireActivity())
-            .get(modelClass = RocketViewModel::class.java)
         viewModel.getRocket(id)
     }
 

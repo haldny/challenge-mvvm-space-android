@@ -2,10 +2,10 @@ package com.devpass.spaceapp.presentation.launchList
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,10 +19,10 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LaunchListActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLaunchListBinding
 
+    private lateinit var binding: ActivityLaunchListBinding
     private lateinit var adapter: LaunchListAdapter
-    private lateinit var viewModel: LaunchListViewModel
+    private val viewModel: LaunchListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,6 @@ class LaunchListActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        viewModel = ViewModelProvider(this)[LaunchListViewModel::class.java]
         viewModel.getLaunches()
     }
 
