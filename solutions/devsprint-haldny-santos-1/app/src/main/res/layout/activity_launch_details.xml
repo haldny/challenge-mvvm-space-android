@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/label_tittle"
+            android:text="@string/label_title"
             android:textColor="@color/white"
             android:textSize="@dimen/size_tittle"
             android:textStyle="bold" />
