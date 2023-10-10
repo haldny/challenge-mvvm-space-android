@@ -8,6 +8,7 @@ import com.devpass.spaceapp.R
 import com.devpass.spaceapp.databinding.ActivityTabBinding
 import com.devpass.spaceapp.presentation.launchList.adapter.LaunchModel
 import com.devpass.spaceapp.presentation.rocket.RocketFragment
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,16 +50,14 @@ class LaunchActivity : AppCompatActivity() {
     }
 
     private fun setupViewPager() {
-        val viewPagerAdapter = ViewPagerAdapter(
-            fragments = getFragments(),
-            fragmentManager = supportFragmentManager,
-            tittles = getPagesTitle()
-        )
-
+        val viewPagerAdapter = ViewPagerAdapter(this)
+        viewPagerAdapter.addListFragment(getFragments())
         binding.viewPager.adapter = viewPagerAdapter
-        binding.tabLayout.setupWithViewPager(binding.viewPager)
-    }
 
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = getPagesTitle()[position]
+        }.attach()
+    }
 
     private fun getPagesTitle(): List<String> {
         return if (model?.details.isNullOrEmpty()) {

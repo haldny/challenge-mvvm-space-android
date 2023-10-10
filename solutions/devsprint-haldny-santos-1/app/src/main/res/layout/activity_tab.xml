@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".presentation.LaunchActivity">
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -22,7 +21,6 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/color_background"
             android:src="@drawable/ic_back_24" />
-
     </androidx.appcompat.widget.Toolbar>
 
     <ImageView
@@ -34,7 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.1"
+        tools:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:id="@+id/tvTittle"
@@ -44,8 +43,8 @@
         android:layout_marginTop="@dimen/margin_top_tittle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivImageSpace" />
-
+        app:layout_constraintTop_toBottomOf="@id/ivImageSpace"
+        tools:text="@string/label_title"/>
 
     <TextView
         android:id="@+id/tvDate"
@@ -55,7 +54,8 @@
         android:layout_marginTop="@dimen/margin_top_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTittle" />
+        app:layout_constraintTop_toBottomOf="@id/tvTittle"
+        tools:text="@string/label_date"/>
 
     <TextView
         android:id="@+id/tvStatus"
@@ -65,29 +65,27 @@
         android:layout_marginTop="@dimen/margin_top_status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDate" />
+        app:layout_constraintTop_toBottomOf="@id/tvDate"
+        tools:text="@string/label_status"/>
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_tabLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvStatus">
+    </com.google.android.material.tabs.TabLayout>
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvStatus">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_tabLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvStatus">
-
-        </com.google.android.material.tabs.TabLayout>
-
-    </androidx.viewpager.widget.ViewPager>
+        app:layout_constraintTop_toBottomOf="@id/tabLayout">
+    </androidx.viewpager2.widget.ViewPager2>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
