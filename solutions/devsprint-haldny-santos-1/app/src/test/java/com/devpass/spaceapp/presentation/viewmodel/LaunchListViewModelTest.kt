@@ -7,6 +7,7 @@ import com.devpass.spaceapp.data.mockLaunchesPage
 import com.devpass.spaceapp.domain.usecase.FetchLaunchesUseCase
 import com.devpass.spaceapp.presentation.launchList.LaunchListUiState
 import com.devpass.spaceapp.presentation.launchList.LaunchListViewModel
+import com.devpass.spaceapp.presentation.rocket.RocketUiState
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -57,8 +58,9 @@ class LaunchListViewModelTest {
     @Test
     fun `when usecase is invoke should set LaunchListUiState Error`() {
 
-        val mockResultLaunchesPage = ResultData.Error(Throwable("Error"))
-        val expected = LaunchListUiState.Error(Throwable("Error"))
+        val throwable = Throwable("Error")
+        val mockResultLaunchesPage = ResultData.Error(throwable)
+        val expected = LaunchListUiState.Error(throwable)
 
         coEvery { usecase.invoke() } returns flowOf(mockResultLaunchesPage)
 

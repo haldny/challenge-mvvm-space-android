@@ -59,9 +59,10 @@ class FetchLaunchesRepositoryTest {
     fun `should return ResultData Error when get Launches requests call error`() = runTest {
 
         val mockQueryParams = mockQueryParams
-        val expected = ResultData.Error(Throwable("Error"))
+        val throwable = Throwable("Error")
+        val expected = ResultData.Error(throwable)
 
-        coEvery { remoteDataSource.getsLaunches(any()) } throws Throwable("Error")
+        coEvery { remoteDataSource.getsLaunches(any()) } throws throwable
 
         val actual = repository.getsLaunches().single()
 

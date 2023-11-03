@@ -59,8 +59,9 @@ class RocketViewModelTest {
     @Test
     fun `when usecase is invoke should set RocketUiState Error`() {
 
-        val mockResultRocket = ResultData.Error(Throwable("Error"))
-        val expected = RocketUiState.Error(Throwable("Error"))
+        val throwable = Throwable("Error")
+        val mockResultRocket = ResultData.Error(throwable)
+        val expected = RocketUiState.Error(throwable)
 
         coEvery { usecase.invoke(any()) } returns flowOf(mockResultRocket)
 

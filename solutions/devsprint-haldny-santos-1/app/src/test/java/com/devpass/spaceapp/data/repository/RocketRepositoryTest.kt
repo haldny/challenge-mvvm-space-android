@@ -59,9 +59,10 @@ class RocketRepositoryTest {
     fun `should return ResultData Error when get Rockets Detail requests call error`() = runTest {
 
         val mockParam = mockIdParam
-        val expected = ResultData.Error(Throwable("Error"))
+        val throwable = Throwable("Error")
+        val expected = ResultData.Error(throwable)
 
-        coEvery { remoteDataSource.getRocketsDetail(any()) } throws Throwable("Error")
+        coEvery { remoteDataSource.getRocketsDetail(any()) } throws throwable
 
         val actual = repository.getRocketsDetail(mockParam).single()
 

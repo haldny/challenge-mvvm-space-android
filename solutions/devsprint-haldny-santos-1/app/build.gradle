@@ -75,6 +75,8 @@ dependencies {
     def mockk_version = "1.13.3"
     def junit_version = "4.13.2"
     def core_testing_version = "2.1.0"
+    def espresso_core = "3.4.0"
+    def hamcrest_version = "2.2"
 
     // AndroidX
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -113,9 +115,17 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     //Test
+    implementation 'androidx.test.ext:junit-ktx:1.1.5'
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
     testImplementation "io.mockk:mockk:$mockk_version"
+
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_core"
+    androidTestImplementation "org.hamcrest:hamcrest:$hamcrest_version"
 
 }
